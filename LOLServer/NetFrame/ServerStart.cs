@@ -110,7 +110,7 @@ namespace NetFrame
 				ProcessSend (e);
 			}
 		}
-
+            
 		public void StartReceive(UserToken token)
 		{
 			//用户连接对象 开启异步接收数据
