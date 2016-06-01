@@ -1,0 +1,5 @@
+D:\Unity\VS2015LocalRepos\LOLServer\LOLServer\obj\x86\Debug\LOLServer.exe
+D:\Unity\VS2015LocalRepos\LOLServer\LOLServer\bin\Debug\LOLServer.exe
+D:\Unity\VS2015LocalRepos\LOLServer\LOLServer\bin\Debug\LOLServer.pdb
+D:\Unity\VS2015LocalRepos\LOLServer\LOLServer\obj\x86\Debug\LOLServer.csprojResolveAssemblyReference.cache
+D:\Unity\VS2015LocalRepos\LOLServer\LOLServer\obj\x86\Debug\LOLServer.pdb
