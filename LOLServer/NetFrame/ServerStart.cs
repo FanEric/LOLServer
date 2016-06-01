@@ -14,11 +14,17 @@ namespace NetFrame
 		int maxClient;//最大客户端连接数
 		Semaphore acceptClients;//限制可同时访问某一资源或资源池的线程数
 		UserToketPool pool;
-		/// <summary>
-		/// 初始化通讯监听
-		/// </summary>
-		/// <param name="port">监听端口.</param>
-		public ServerStart (int max)
+
+        public LengthEncode LE;
+        public LengthDecode LD;
+        public Encode encode;
+        public Decode decode;
+
+        /// <summary>
+        /// 初始化通讯监听
+        /// </summary>
+        /// <param name="port">监听端口.</param>
+        public ServerStart (int max)
 		{
 			//实例化监听对象
 			server = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -32,6 +38,11 @@ namespace NetFrame
 				//初始化token的信息
 				token.receiveSAEA.Completed += new EventHandler<SocketAsyncEventArgs> (IOCompleted);
 				token.sendSAEA.Completed += new EventHandler<SocketAsyncEventArgs> (IOCompleted);
+                token.LD = LD;
+                token.LE = LE;
+                token.encode = encode;
+                token.decode = decode;
+                token.sendProcess = ProcessSend;
 				pool.push (token);
 			}
 		}
@@ -60,6 +71,7 @@ namespace NetFrame
 				e.AcceptSocket = null;
 			}
 
+            //信号量-1
 			acceptClients.WaitOne ();
 			bool result = server.AcceptAsync (e);
 			//判断异步事件是否挂起，没挂起说明立刻执行完成，直接处理事件
@@ -116,22 +128,33 @@ namespace NetFrame
 			//判断网络消息接收是否成功
 			if (token.receiveSAEA.BytesTransferred > 0 && token.receiveSAEA.SocketError == SocketError.Success) {
 				byte[] message = new byte[token.receiveSAEA.BytesTransferred];
-				Buffer.BlockCopy (token.receiveSAEA.Buffer, 0, token.receiveSAEA.BytesTransferred);
-				//处理接收到的消息
+				Buffer.BlockCopy (token.receiveSAEA.Buffer, 0, message, 0, token.receiveSAEA.BytesTransferred);
+                //处理接收到的消息
+                token.Recevie(message);
 				StartReceive (token);
 			} else {
 				if (token.receiveSAEA.SocketError != SocketError.Success) {
-					
-				} else {
-				
+                    ClientClose(token, token.receiveSAEA.SocketError.ToString());
+				}
+                else //消息为0且没有错误信息的话判断为客户端主动断开连接
+                {
+                    ClientClose(token, "客户端主动断开连接");
 				}
 			}
 		}
 
 		public void ProcessSend(SocketAsyncEventArgs e)
 		{
-
-		}
+            UserToken token = e.UserToken as UserToken;
+            if (e.SocketError != SocketError.Success)
+            {
+                ClientClose(token, e.SocketError.ToString());
+            }
+            else {
+                //消息发送成功，回调处理
+                token.Writed();
+            }
+        }
 
 		/// <summary>
 		/// 客户端断开连接
