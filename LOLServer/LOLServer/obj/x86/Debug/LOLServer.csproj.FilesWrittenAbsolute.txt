@@ -1,0 +1,5 @@
+/Users/apple/Documents/Git/LOLServer/LOLServer/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/apple/Documents/Git/LOLServer/LOLServer/bin/Debug/LOLServer.exe.mdb
+/Users/apple/Documents/Git/LOLServer/LOLServer/bin/Debug/LOLServer.exe
+/Users/apple/Documents/Git/LOLServer/LOLServer/obj/x86/Debug/LOLServer.exe
+/Users/apple/Documents/Git/LOLServer/LOLServer/obj/x86/Debug/LOLServer.exe.mdb

@@ -64,10 +64,18 @@ namespace NetFrame
 			bool result = server.AcceptAsync (e);
 			//判断异步事件是否挂起，没挂起说明立刻执行完成，直接处理事件
 			//否则会在处理完成后触发AcceptCompleted事件
+
+			//如果 I/O 操作挂起，将返回 true。操作完成时，将引发 e 参数的 SocketAsyncEventArgs.Completed 事件。
+			//如果 I/O 操作同步完成，将返回 false。将不会引发 e 参数的 SocketAsyncEventArgs.Completed 事件，并且可能在方法调用返回后立即检查作为参数传递的 e 对象以检索操作的结果。
 			if (!result) {
 				ProcessAccept (e);
 			}
 				
+		}
+
+		public void AcceptCompleted(Object sender, SocketAsyncEventArgs e)
+		{
+			ProcessAccept (e);
 		}
 
 		public void ProcessAccept(SocketAsyncEventArgs e)
@@ -80,11 +88,6 @@ namespace NetFrame
 			StartReceive(token);
 			//释放当前异步对象
 			StartAccept(e);
-		}
-
-		public void AcceptCompleted(Object sender, SocketAsyncEventArgs e)
-		{
-			ProcessAccept (e);
 		}
 
 		public void IOCompleted(Object sender, SocketAsyncEventArgs e)

@@ -5,15 +5,15 @@ namespace NetFrame
 {
 	public class UserToketPool
 	{
+		//System.Collections.Stack类表示对象的简单的后进先出非泛型集合
 		private Stack<UserToken> pool;
 
 		public UserToketPool (int max)
 		{
 			pool = new Stack<UserToken> (max);
 		}
-
 		/// <summary>
-		/// 取出一个对象－－创建连接
+		/// 取出一个对象
 		/// </summary>
 		public UserToken pop()
 		{
@@ -21,7 +21,7 @@ namespace NetFrame
 		}
 
 		/// <summary>
-		/// 插入一个连接对象－－释放连接
+		/// 插入一个连接对象
 		/// </summary>
 		/// <param name="token">Token.</param>
 		public void push(UserToken token)
