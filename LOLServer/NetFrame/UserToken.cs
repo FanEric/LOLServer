@@ -30,6 +30,11 @@ namespace NetFrame
         public delegate void SendProcess(SocketAsyncEventArgs e);
         public SendProcess sendProcess;
 
+		public delegate void CloseProcess(UserToken token, string error);
+		public CloseProcess closeProcess;
+
+		public AbsHandlerCenter center;
+
         List<byte> cache = new List<byte>();
 
         private bool isReading = false;
@@ -91,16 +96,20 @@ namespace NetFrame
             //反序列化方法是否存在
             if (decode == null) throw new Exception("message decode process is null");
             //进行消息反序列化
-            object mesage = decode(buff);
+            object message = decode(buff);
 
             //TODO 通知应用层有消息到达
+			center.MessageReceive(this, message);
             //尾递归，防止在消息处理过程中有其他消息达到而没有处理
             OnData();
         }
 
         public void Write(byte[] value)
         {
-            if (conn == null) return;  //次连接已断开
+			if (conn == null) {
+				closeProcess (this, "此连接已断开");
+				return;  //次连接已断开
+			}
 
             writeQueue.Enqueue(value);
             if (!isWriting)

@@ -20,6 +20,11 @@ namespace NetFrame
         public Encode encode;
         public Decode decode;
 
+		/// <summary>
+		/// 消息处理中心，由外部应用传入
+		/// </summary>
+		public AbsHandlerCenter center;
+
         /// <summary>
         /// 初始化通讯监听
         /// </summary>
@@ -30,25 +35,28 @@ namespace NetFrame
 			server = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			//设定服务器最大连接数
 			maxClient = max;
-			pool = new UserToketPool (max);
-			//连接信号量
-			acceptClients = new Semaphore (max, max);//初始化的时候就获取最大的连接数
-			for (int i = 0; i < max; i++) {
-				UserToken token = new UserToken ();
-				//初始化token的信息
-				token.receiveSAEA.Completed += new EventHandler<SocketAsyncEventArgs> (IOCompleted);
-				token.sendSAEA.Completed += new EventHandler<SocketAsyncEventArgs> (IOCompleted);
-                token.LD = LD;
-                token.LE = LE;
-                token.encode = encode;
-                token.decode = decode;
-                token.sendProcess = ProcessSend;
-				pool.push (token);
-			}
+
 		}
 
 		public void Start(int port)
 		{
+			pool = new UserToketPool (maxClient);
+			//连接信号量
+			acceptClients = new Semaphore (maxClient, maxClient);//初始化的时候就获取最大的连接数
+			for (int i = 0; i < maxClient; i++) {
+				UserToken token = new UserToken ();
+				//初始化token的信息
+				token.receiveSAEA.Completed += new EventHandler<SocketAsyncEventArgs> (IOCompleted);
+				token.sendSAEA.Completed += new EventHandler<SocketAsyncEventArgs> (IOCompleted);
+				token.LD = LD;
+				token.LE = LE;
+				token.encode = encode;
+				token.decode = decode;
+				token.sendProcess = ProcessSend;
+				token.closeProcess = ClientClose;
+				token.center = center;
+				pool.push (token);
+			}
 			//监听当前服务器网卡所有可用IP地址的端口
 			server.Bind(new IPEndPoint(IPAddress.Any, port));
 			//置于监听状态
@@ -96,6 +104,7 @@ namespace NetFrame
 			UserToken token = pool.pop ();
 			token.conn = e.AcceptSocket;
 			//TODO 通知应用层，有客户端连接
+			center.ClientConnect(token);
 			//开启消息到达监听
 			StartReceive(token);
 			//释放当前异步对象
@@ -166,6 +175,7 @@ namespace NetFrame
 			if (token.conn != null) {
 				lock (token) {
 					//通知应用层面，客户端断开连接了
+					center.ClientClose(token, error);
 					token.Close();
 					pool.push (token);
 					//加回一个信号量，供其他用户使用

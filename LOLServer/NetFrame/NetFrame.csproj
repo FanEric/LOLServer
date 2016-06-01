@@ -37,6 +37,11 @@
     <Compile Include="ServerStart.cs" />
     <Compile Include="UserToketPool.cs" />
     <Compile Include="UserToken.cs" />
+    <Compile Include="AbsHandlerCenter.cs" />
+    <Compile Include="auto\MessgeEncoding.cs" />
+    <Compile Include="auto\SocketModel.cs" />
+    <Compile Include="ByteArray.cs" />
+    <Compile Include="SerializeUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
