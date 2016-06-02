@@ -1,0 +1,5 @@
+D:\Unity\VS2015LocalRepos\LOLServer\NetFrame\bin\Debug\NetFrame.dll
+D:\Unity\VS2015LocalRepos\LOLServer\NetFrame\bin\Debug\NetFrame.pdb
+D:\Unity\VS2015LocalRepos\LOLServer\NetFrame\obj\Debug\NetFrame.csprojResolveAssemblyReference.cache
+D:\Unity\VS2015LocalRepos\LOLServer\NetFrame\obj\Debug\NetFrame.dll
+D:\Unity\VS2015LocalRepos\LOLServer\NetFrame\obj\Debug\NetFrame.pdb
