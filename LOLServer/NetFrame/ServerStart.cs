@@ -28,7 +28,7 @@ namespace NetFrame
         /// <summary>
         /// 初始化通讯监听
         /// </summary>
-        /// <param name="port">监听端口.</param>
+        /// <param name="port">最大连接数.</param>
         public ServerStart (int max)
 		{
 			//实例化监听对象
@@ -57,11 +57,22 @@ namespace NetFrame
 				token.center = center;
 				pool.push (token);
 			}
-			//监听当前服务器网卡所有可用IP地址的端口
-			server.Bind(new IPEndPoint(IPAddress.Any, port));
-			//置于监听状态
-			server.Listen(10);
-			StartAccept (null);
+
+
+            try  //防止服务器重复启动
+            {
+                //监听当前服务器网卡所有可用IP地址的端口
+                server.Bind(new IPEndPoint(IPAddress.Any, port));
+                //置于监听状态
+                server.Listen(10);
+                StartAccept(null);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+			
 		}
 
 		/// <summary>
@@ -122,12 +133,18 @@ namespace NetFrame
             
 		public void StartReceive(UserToken token)
 		{
-			//用户连接对象 开启异步接收数据
-			bool result = token.conn.ReceiveAsync (token.receiveSAEA);
-			//异步事件是否挂起
-			if (!result) {
-				ProcessReceive (token.receiveSAEA);
-			}
+            try {
+                //用户连接对象 开启异步接收数据
+                bool result = token.conn.ReceiveAsync(token.receiveSAEA);
+                //异步事件是否挂起
+                if (!result)
+                {
+                    ProcessReceive(token.receiveSAEA);
+                }
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 		}
 
 		public void ProcessReceive(SocketAsyncEventArgs e)

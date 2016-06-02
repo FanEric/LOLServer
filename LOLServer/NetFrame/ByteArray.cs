@@ -39,7 +39,7 @@ namespace NetFrame
 		/// 获取当前数据长度
 		/// </summary>
 		/// <value>The length.</value>
-		public int Length{get{ (int)ms.Length;}}
+		public int Length{get{ return (int)ms.Length;}}
 
 		/// <summary>
 		/// 当前是否还有数据可以读取

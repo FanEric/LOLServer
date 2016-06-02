@@ -2,9 +2,9 @@
 
 namespace NetFrame.auto
 {
-	public class MessgeEncoding
+	public class MessageEncoding
 	{
-		public MessgeEncoding ()
+		public MessageEncoding ()
 		{
 		}
 
@@ -12,7 +12,7 @@ namespace NetFrame.auto
 		/// 消息体序列化
 		/// </summary>
 		/// <param name="value">Value.</param>
-		public byte[] Encode(object value)
+		public static byte[] Encode(object value)
 		{
 			SocketModel model = value as SocketModel;
 			ByteArray ba = new ByteArray ();
@@ -24,14 +24,14 @@ namespace NetFrame.auto
 			}
 			byte[] result = ba.getBuff ();
 			ba.Close ();
-
+            return result;
 		}
 
 		/// <summary>
 		/// 消息体反序列化
 		/// </summary>
 		/// <param name="value">Value.</param>
-		public object Decode(byte[] value)
+        public static object Decode(byte[] value)
 		{
 			ByteArray ba = new ByteArray (value);
 			SocketModel model = new SocketModel ();
