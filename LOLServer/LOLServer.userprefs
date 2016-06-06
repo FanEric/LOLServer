@@ -1,14 +1,14 @@
 ﻿<Properties StartupItem="LOLServer/LOLServer.csproj" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="NetFrame/ServerStart.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="NetFrame/ServerStart.cs" Line="15" Column="12" />
-      <File FileName="NetFrame/UserToketPool.cs" Line="16" Column="7" />
+      <File FileName="NetFrame/ServerStart.cs" Line="1" Column="1" />
+      <File FileName="NetFrame/UserToketPool.cs" Line="1" Column="1" />
       <File FileName="NetFrame/UserToken.cs" Line="1" Column="1" />
-      <File FileName="NetFrame/SerializeUtil.cs" Line="17" Column="3" />
-      <File FileName="NetFrame/auto/MessgeEncoding.cs" Line="39" Column="13" />
+      <File FileName="NetFrame/SerializeUtil.cs" Line="1" Column="1" />
+      <File FileName="NetFrame/auto/MessgeEncoding.cs" Line="1" Column="1" />
       <File FileName="NetFrame/ByteArray.cs" Line="1" Column="1" />
-      <File FileName="NetFrame/auto/LengthEncoding.cs" Line="28" Column="24" />
+      <File FileName="NetFrame/auto/LengthEncoding.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
