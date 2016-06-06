@@ -2,6 +2,9 @@
 
 namespace NetFrame.auto
 {
+    /// <summary>
+    /// 消息解码
+    /// </summary>
 	public class MessageEncoding
 	{
 		public MessageEncoding ()

@@ -58,7 +58,6 @@ namespace NetFrame
 				pool.push (token);
 			}
 
-
             try  //防止服务器重复启动
             {
                 //监听当前服务器网卡所有可用IP地址的端口
@@ -69,7 +68,6 @@ namespace NetFrame
             }
             catch (Exception e)
             {
-
                 Console.WriteLine(e.Message);
             }
 			
