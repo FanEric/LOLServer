@@ -14,7 +14,7 @@ namespace NetFrame
 		/// <summary>
 		/// 对象序列化
 		/// </summary>
-		public static byte[] encode(Object value)
+		public static byte[] encode(object value)
 		{
 			MemoryStream ms = new MemoryStream ();//创建编码解码的内存流对象
 			BinaryFormatter bw = new BinaryFormatter();//写入二进制流

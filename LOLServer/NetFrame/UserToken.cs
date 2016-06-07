@@ -48,8 +48,8 @@ namespace NetFrame
 			sendSAEA = new SocketAsyncEventArgs ();
 			receiveSAEA.UserToken = this;
 			sendSAEA.UserToken = this;
-
-		}
+            receiveSAEA.SetBuffer(new byte[1024], 0, 1024);
+        }
 
         /// <summary>
         /// 网络消息达到
